@@ -6,14 +6,19 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>61324c8c-e798-421a-b7c4-8b55b1c99c86</ProjectGuid>
+    <ProjectGuid>dc9d1fb8-00b2-4892-8091-8e106abd536d</ProjectGuid>
     <RootNamespace>Vicy.UserManagement.Server.Api</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vicy.UserManagement.Server.Common\Vicy.UserManagement.Server.Common.csproj" />
+    <ProjectReference Include="..\Vicy.UserManagement.Server.DataAccess\Vicy.UserManagement.Server.DataAccess.csproj" />
+    <ProjectReference Include="..\Vicy.UserManagement.Server.Domain\Vicy.UserManagement.Server.Domain.csproj" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet.Web\Microsoft.DotNet.Web.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

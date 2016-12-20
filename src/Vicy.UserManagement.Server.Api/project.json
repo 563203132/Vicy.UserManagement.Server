@@ -1,9 +1,5 @@
 {
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "version": "1.0.1",
-      "type": "platform"
-    },
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
@@ -14,8 +10,8 @@
     "Microsoft.Extensions.Logging": "1.0.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
-    "Swashbuckle.SwaggerGen": "6.0.0-beta901",
-    "Swashbuckle.SwaggerUi": "6.0.0-beta901"
+    "Swashbuckle.SwaggerGen": "6.0.0-beta902",
+    "Swashbuckle.SwaggerUi": "6.0.0-beta902"
   },
 
   "tools": {
@@ -25,12 +21,18 @@
   },
 
   "frameworks": {
-    "netcoreapp1.0": {
-      "imports": [
-        "dotnet5.6",
-        "dnxcore50",
-        "portable-net45+win8"
-      ]
+    "net461": {
+      "dependencies": {
+        "Vicy.UserManagement.Server.Common": {
+          "target": "project"
+        },
+        "Vicy.UserManagement.Server.DataAccess": {
+          "target": "project"
+        },
+        "Vicy.UserManagement.Server.Domain": {
+          "target": "project"
+        }
+      }
     }
   },
 
@@ -38,10 +40,6 @@
     "emitEntryPoint": true,
     "preserveCompilationContext": true,
     "xmlDoc": true
-  },
-
-  "runtimeOptions": {
-    "gcServer": true
   },
 
   "publishOptions": {

@@ -44,6 +44,12 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vicy.UserManagement.Server.Domain\Vicy.UserManagement.Server.Domain.csproj">
+      <Project>{15c327b6-ff37-41c3-a177-a58cd1d9cb07}</Project>
+      <Name>Vicy.UserManagement.Server.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
