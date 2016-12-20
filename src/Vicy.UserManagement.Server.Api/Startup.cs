@@ -38,19 +38,26 @@ namespace Vicy.UserManagement.Server.Api
                 {ExceptionsOnConfigureServices, new List<Exception>()}
             };
 
-            var builder = new ConfigurationBuilder()
+            try
+            {
+                var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsEnvironment("Development"))
-            {
-                // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
-                builder.AddApplicationInsightsSettings(developerMode: true);
-            }
+                if (env.IsEnvironment("Development"))
+                {
+                    // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
+                    builder.AddApplicationInsightsSettings(developerMode: true);
+                }
 
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
+                builder.AddEnvironmentVariables();
+                Configuration = builder.Build();
+            }
+            catch (Exception ex)
+            {
+                _exceptions[ExceptionsOnStartup].Add(ex);
+            }
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -102,7 +109,7 @@ namespace Vicy.UserManagement.Server.Api
                 // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
                 app.UseSwaggerUi();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 app.Run(async context =>
                 {
