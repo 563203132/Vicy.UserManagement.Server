@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using NLog.Extensions.Logging;
 using Swashbuckle.Swagger.Model;
 using Vicy.UserManagement.Server.Common;
+using Vicy.UserManagement.Server.DataAccess.Configurations;
 
 namespace Vicy.UserManagement.Server.Api
 {
@@ -82,6 +83,8 @@ namespace Vicy.UserManagement.Server.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            InitializeDbConfiguration(loggerFactory);
+
             // Check if any errors occurred on the constructor or ConfigureServices
             var logger = loggerFactory.CreateLogger<Startup>();
             if (_exceptions.Any(p => p.Value.Any()))
@@ -119,6 +122,16 @@ namespace Vicy.UserManagement.Server.Api
 
                 app.UseApplicationInsightsExceptionTelemetry();
             }
+        }
+
+        private void InitializeDbConfiguration(ILoggerFactory loggerFactory)
+        {
+            var dbConnectionStrings = new DbConnectionStrings();
+            Configuration.GetSection("ConnectionStrings").Bind(dbConnectionStrings);
+            DbConfiguration.SetConfiguration(
+                new VicyDbConfiguration(
+                    dbConnectionStrings,
+                    new PoorPerformingSqlLogger(loggerFactory, 200)));
         }
 
         /// <summary>
