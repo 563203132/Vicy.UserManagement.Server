@@ -2,7 +2,7 @@
 
 namespace Vicy.UserManagement.Server.Domain.Shared
 {
-    public class IReadDbFacade
+    public interface IReadDbFacade
     {
         IQueryable<User> Users { get; }
     }

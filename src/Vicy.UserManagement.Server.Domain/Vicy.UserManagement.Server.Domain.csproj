@@ -48,7 +48,12 @@
     <Compile Include="Shared\IDomainEvent.cs" />
     <Compile Include="Shared\IReadDbFacade.cs" />
     <Compile Include="Shared\IRepository.cs" />
+    <Compile Include="User\IUserFactory.cs" />
+    <Compile Include="User\IUserRepository.cs" />
+    <Compile Include="User\IUserService.cs" />
     <Compile Include="User\User.cs" />
+    <Compile Include="User\UserFactory.cs" />
+    <Compile Include="User\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vicy.UserManagement.Server.Common\Vicy.UserManagement.Server.Common.csproj">

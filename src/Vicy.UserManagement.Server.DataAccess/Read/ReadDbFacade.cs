@@ -9,11 +9,11 @@ namespace Vicy.UserManagement.Server.DataAccess.Read
     {
         private readonly ReadDbContext _context = new ReadDbContext();
 
-        public IQueryable<User> User => _context.Users;
+        public IQueryable<User> Users => _context.Users;
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
     }
 }

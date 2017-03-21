@@ -71,6 +71,11 @@
     <Compile Include="Configurations\DbConnectionStrings.cs" />
     <Compile Include="Configurations\PoorPerformingSqlLogger.cs" />
     <Compile Include="Configurations\VicyDbConfiguration.cs" />
+    <Compile Include="Migrations\201703211408127_CreateDatabaseAndCreateUserTable.cs" />
+    <Compile Include="Migrations\201703211408127_CreateDatabaseAndCreateUserTable.Designer.cs">
+      <DependentUpon>201703211408127_CreateDatabaseAndCreateUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Read\ReadDbContext.cs" />
     <Compile Include="Read\ReadDbFacade.cs" />
@@ -91,7 +96,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703211408127_CreateDatabaseAndCreateUserTable.resx">
+      <DependentUpon>201703211408127_CreateDatabaseAndCreateUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
