@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,8 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\AggregateRoot.cs" />
+    <Compile Include="Shared\ConcurrencyAggregateRoot.cs" />
+    <Compile Include="Shared\Entity.cs" />
+    <Compile Include="Shared\IDomainEvent.cs" />
+    <Compile Include="Shared\IReadDbFacade.cs" />
+    <Compile Include="Shared\IRepository.cs" />
+    <Compile Include="User\IUserFactory.cs" />
+    <Compile Include="User\IUserRepository.cs" />
+    <Compile Include="User\IUserService.cs" />
+    <Compile Include="User\User.cs" />
+    <Compile Include="User\UserFactory.cs" />
+    <Compile Include="User\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vicy.UserManagement.Server.Common\Vicy.UserManagement.Server.Common.csproj">
@@ -49,6 +61,7 @@
       <Name>Vicy.UserManagement.Server.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

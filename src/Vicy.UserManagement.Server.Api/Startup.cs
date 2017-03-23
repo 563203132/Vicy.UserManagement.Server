@@ -15,6 +15,15 @@ using Newtonsoft.Json;
 using NLog.Extensions.Logging;
 using Swashbuckle.Swagger.Model;
 using Vicy.UserManagement.Server.Common;
+using Vicy.UserManagement.Server.DataAccess.Configurations;
+using System.Data.Entity;
+using Newtonsoft.Json.Serialization;
+using Vicy.UserManagement.Server.DataAccess.Write;
+using Mehdime.Entity;
+using Vicy.UserManagement.Server.Domain.Shared;
+using Vicy.UserManagement.Server.DataAccess.Read;
+using Vicy.UserManagement.Server.DataAccess.Write.Repositories;
+using Vicy.UserManagement.Server.Domain;
 
 namespace Vicy.UserManagement.Server.Api
 {
@@ -65,10 +74,26 @@ namespace Vicy.UserManagement.Server.Api
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            AddDependencies(services);
+
+            InjectDbContextScope(services);
+            InjectRepositories(services);
+            InjectDomainServices(services);
+            InjectDomainFactories(services);
+
+            services.AddSingleton<IDbContextFactory, DbContextFactory>();
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                // use standard name conversion of properties
+                options.SerializerSettings.ContractResolver =
+                    new CamelCasePropertyNamesContractResolver();
+
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            });
 
             AddSwaggerGen(services);
         }
@@ -81,6 +106,8 @@ namespace Vicy.UserManagement.Server.Api
             env.ConfigureNLog($"nlog.{env.EnvironmentName}.config");
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            InitializeDbConfiguration(loggerFactory);
 
             // Check if any errors occurred on the constructor or ConfigureServices
             var logger = loggerFactory.CreateLogger<Startup>();
@@ -119,6 +146,16 @@ namespace Vicy.UserManagement.Server.Api
 
                 app.UseApplicationInsightsExceptionTelemetry();
             }
+        }
+
+        private void InitializeDbConfiguration(ILoggerFactory loggerFactory)
+        {
+            var dbConnectionStrings = new DbConnectionStrings();
+            Configuration.GetSection("ConnectionStrings").Bind(dbConnectionStrings);
+            DbConfiguration.SetConfiguration(
+                new VicyDbConfiguration(
+                    dbConnectionStrings,
+                    new PoorPerformingSqlLogger(loggerFactory, 200)));
         }
 
         /// <summary>
@@ -234,6 +271,37 @@ namespace Vicy.UserManagement.Server.Api
                 var xmlPath = Path.Combine(basePath, "Vicy.UserManagement.Server.Api.xml");
                 options.IncludeXmlComments(xmlPath);
             });
+        }
+
+        private void AddDependencies(IServiceCollection services)
+        {
+            // Add options
+            services.AddOptions();
+            services.Configure<DbConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+        }
+
+        private static void InjectDbContextScope(IServiceCollection services)
+        {
+            services.AddSingleton<IDbContextScopeFactory, DbContextScopeFactory>();
+            services.AddSingleton<IDbContextScopeFactory, DbContextScopeFactory>();
+            services.AddSingleton<IAmbientDbContextLocator, AmbientDbContextLocator>();
+            services.AddSingleton<ILoggerFactory, LoggerFactory>();
+            services.AddScoped<IReadDbFacade, ReadDbFacade>();
+        }
+
+        private static void InjectRepositories(IServiceCollection services)
+        {
+            services.AddTransient<IUserRepository, UserRepository>();
+        }
+
+        private void InjectDomainServices(IServiceCollection services)
+        {
+            services.AddTransient<IUserService, UserService>();
+        }
+
+        private void InjectDomainFactories(IServiceCollection services)
+        {
+            services.AddTransient<IUserFactory, UserFactory>();
         }
     }
 }
