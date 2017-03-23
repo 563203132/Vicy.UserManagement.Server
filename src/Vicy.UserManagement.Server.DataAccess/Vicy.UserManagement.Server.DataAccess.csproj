@@ -94,6 +94,7 @@
     <Compile Include="Write\DbContextFactory.cs" />
     <Compile Include="Write\Mapping\EventMapping.cs" />
     <Compile Include="Write\Mapping\UserMapping.cs" />
+    <Compile Include="Write\MigrationsDbContextFactory.cs" />
     <Compile Include="Write\Repositories\UserRepository.cs" />
     <Compile Include="Write\Repository.cs" />
     <Compile Include="Write\WriteDbContext.cs" />
