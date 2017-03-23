@@ -1,5 +1,6 @@
 ﻿using Mehdime.Entity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using Vicy.UserManagement.Server.Api.Models;
 using Vicy.UserManagement.Server.Domain;
@@ -45,6 +46,33 @@ namespace Vicy.UserManagement.Server.Api.Controllers
                     userModel.LastName,
                     userModel.Email,
                     userModel.PhoneNumber);
+
+                dbContextScope.SaveChanges();
+
+                return Ok(user.Id);
+            }
+        }
+
+        [Route("edit")]
+        [HttpPut]
+        [ProducesResponseType(typeof(UserModel), 200)]
+        [ProducesResponseType(typeof(UserModel), 404)]
+        public IActionResult Edit([FromBody]UserModel userModel)
+        {
+            if (userModel.Id == 0)
+                throw new ArgumentException($"user id is {userModel.Id}");
+
+            using (var dbContextScope = _dbContextScopeFactory.Create())
+            {
+                var user = _userService.Edit(
+                    userModel.Id,
+                    userModel.FirstName,
+                    userModel.LastName,
+                    userModel.Email,
+                    userModel.PhoneNumber);
+
+                if (user == null)
+                    return NotFound();
 
                 dbContextScope.SaveChanges();
 
