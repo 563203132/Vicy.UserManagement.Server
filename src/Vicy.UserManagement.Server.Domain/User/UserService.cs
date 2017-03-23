@@ -21,6 +21,8 @@ namespace Vicy.UserManagement.Server.Domain
 
             _userRepository.Insert(user);
 
+            user.AddCreatedEvent();
+
             return user;
         }
     }

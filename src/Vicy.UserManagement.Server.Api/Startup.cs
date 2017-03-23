@@ -24,6 +24,7 @@ using Vicy.UserManagement.Server.Domain.Shared;
 using Vicy.UserManagement.Server.DataAccess.Read;
 using Vicy.UserManagement.Server.DataAccess.Write.Repositories;
 using Vicy.UserManagement.Server.Domain;
+using Vicy.UserManagement.Server.DataAccess.EventStore;
 
 namespace Vicy.UserManagement.Server.Api
 {
@@ -80,6 +81,8 @@ namespace Vicy.UserManagement.Server.Api
             InjectRepositories(services);
             InjectDomainServices(services);
             InjectDomainFactories(services);
+            InjectEventHandler(services);
+            InjectEventStore(services);
 
             services.AddSingleton<IDbContextFactory, DbContextFactory>();
 
@@ -302,6 +305,18 @@ namespace Vicy.UserManagement.Server.Api
         private void InjectDomainFactories(IServiceCollection services)
         {
             services.AddTransient<IUserFactory, UserFactory>();
+        }
+
+        private void InjectEventHandler(IServiceCollection services)
+        {
+            services.AddSingleton<IEventDispatcher, ASPNETEventDispatcher>();
+            services.AddTransient<IHandler<UserCreatedEvent>, UserCreatedEventHandler>();
+        }
+
+        private void InjectEventStore(IServiceCollection services)
+        {
+            services.AddSingleton<IEventEngine, EventEngine>();
+            services.AddSingleton<IEventSerializer, JsonEventSerializer>();
         }
     }
 }

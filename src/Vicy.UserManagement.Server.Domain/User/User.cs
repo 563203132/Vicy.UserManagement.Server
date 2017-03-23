@@ -26,5 +26,13 @@ namespace Vicy.UserManagement.Server.Domain
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+
+        public void AddCreatedEvent()
+        {
+            if (Id > 0)
+            {
+                AddEvent(new UserCreatedEvent { UserId = Id });
+            }
+        }
     }
 }

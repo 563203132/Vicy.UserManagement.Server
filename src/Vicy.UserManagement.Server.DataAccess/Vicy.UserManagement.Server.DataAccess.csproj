@@ -55,6 +55,10 @@
       <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.1.0.0\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -71,9 +75,16 @@
     <Compile Include="Configurations\DbConnectionStrings.cs" />
     <Compile Include="Configurations\PoorPerformingSqlLogger.cs" />
     <Compile Include="Configurations\VicyDbConfiguration.cs" />
+    <Compile Include="EventStore\Event.cs" />
+    <Compile Include="EventStore\EventEngine.cs" />
+    <Compile Include="EventStore\JsonEventSerializer.cs" />
     <Compile Include="Migrations\201703211408127_CreateDatabaseAndCreateUserTable.cs" />
     <Compile Include="Migrations\201703211408127_CreateDatabaseAndCreateUserTable.Designer.cs">
       <DependentUpon>201703211408127_CreateDatabaseAndCreateUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703230909367_AddEventTable.cs" />
+    <Compile Include="Migrations\201703230909367_AddEventTable.Designer.cs">
+      <DependentUpon>201703230909367_AddEventTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +92,7 @@
     <Compile Include="Read\ReadDbFacade.cs" />
     <Compile Include="VicyDbConnectionFactory.cs" />
     <Compile Include="Write\DbContextFactory.cs" />
+    <Compile Include="Write\Mapping\EventMapping.cs" />
     <Compile Include="Write\Mapping\UserMapping.cs" />
     <Compile Include="Write\Repositories\UserRepository.cs" />
     <Compile Include="Write\Repository.cs" />
@@ -99,6 +111,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703211408127_CreateDatabaseAndCreateUserTable.resx">
       <DependentUpon>201703211408127_CreateDatabaseAndCreateUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703230909367_AddEventTable.resx">
+      <DependentUpon>201703230909367_AddEventTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

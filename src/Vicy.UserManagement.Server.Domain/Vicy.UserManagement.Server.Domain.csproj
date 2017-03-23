@@ -44,10 +44,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\AggregateRoot.cs" />
     <Compile Include="Shared\ConcurrencyAggregateRoot.cs" />
+    <Compile Include="Shared\DomainEvent.cs" />
     <Compile Include="Shared\Entity.cs" />
     <Compile Include="Shared\IDomainEvent.cs" />
+    <Compile Include="Shared\IEventDispatcher.cs" />
+    <Compile Include="Shared\IEventEngine.cs" />
+    <Compile Include="Shared\IEventSerializer.cs" />
+    <Compile Include="Shared\IHandler.cs" />
     <Compile Include="Shared\IReadDbFacade.cs" />
     <Compile Include="Shared\IRepository.cs" />
+    <Compile Include="User\Events\UserCreatedEvent.cs" />
+    <Compile Include="User\Handlers\UserCreatedEventHandler.cs" />
     <Compile Include="User\IUserFactory.cs" />
     <Compile Include="User\IUserRepository.cs" />
     <Compile Include="User\IUserService.cs" />
